@@ -1,19 +1,25 @@
+/* eslint-disable react/display-name */
 // import { v4 } from 'uuid';
 
-const Profile = ({ session, logout }) => {
-  // const logout = evt => {
-  //   evt.preventDefault();
-  //   // session.loginUser = null;
-  //   session = {};
-  // }
+import { forwardRef } from 'react';
+import { useSession } from '../hooks/session-context';
+
+// const Profile = (ref) => {
+const Profile = forwardRef((props, ref) => {
+  console.log('@@@ Profile');
+  const {
+    session: {
+      loginUser: { name: userName },
+    },
+  } = useSession();
 
   return (
     <>
-      <div>User ID: {session.loginUser?.name}</div>
-      <button onClick={logout}>Logout</button>
-      
+      <div>User ID: {userName}</div>
+      {/* <button onClick={logout}>Logout</button> */}
+      <button ref={ref}>Logout</button>
     </>
-  )
-}
+  );
+});
 
 export default Profile;
