@@ -1,4 +1,5 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import { useCount } from '../hooks/count-context';
 import { useSession } from '../hooks/session-context';
 
 const Login = () => {
@@ -6,6 +7,7 @@ const Login = () => {
   // const [userId, setUserId] = useState();
   const userIdRef = useRef();
   const userNameRef = useRef();
+  const { plusCount, minusCount } = useCount();
 
   const { login } = useSession();
 
@@ -31,6 +33,20 @@ const Login = () => {
     console.log('xxxx222', userNameRef.current?.value);
     login({ id, name });
   };
+
+  useEffect(() => {
+    console.log('effect!!!!!!');
+    console.log('로인해주세요!');
+    userIdRef.current.focus();
+    plusCount();
+
+    return () => {
+      console.log('로인되었습니다!');
+      minusCount();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  // }, [plusCount, minusCount]);
 
   return (
     <>

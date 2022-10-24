@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react';
-
 import SampleSession from '../../public/data/sample.json';
+
 // const SampleSession = {
 //   loginUser: { id: 1, name: '홍길동' },
 //   cart: [
@@ -27,7 +27,8 @@ const SessionProvider = ({ children }) => {
   };
 
   const addCartItem = (name, price) => {
-    session.cart.push({ id: 300, name, price });
+    const maxId = Math.max(...session.cart.map((item) => item.id), 0); // mapBy('id')
+    session.cart.push({ id: maxId + 1, name, price });
     setSession({ ...session });
     // bad!!
     // setSession({

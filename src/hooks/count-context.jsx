@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react';
-import { flushSync } from 'react-dom';
+// import { flushSync } from 'react-dom';
 
 const CountContext = createContext();
 
@@ -21,11 +21,16 @@ export const CountProvider = ({ children }) => {
   // };
 
   const plusCount = () => {
-    flushSync(() => setCount((c) => c + 1));
+    // flushSync(() => setCount((c) => c + 1));
+    setCount((c) => c + 1);
+  };
+
+  const minusCount = () => {
+    setCount((c) => c - 1);
   };
 
   return (
-    <CountContext.Provider value={{ count, plusCount }}>
+    <CountContext.Provider value={{ count, plusCount, minusCount }}>
       {children}
     </CountContext.Provider>
   );

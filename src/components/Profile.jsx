@@ -1,5 +1,4 @@
 /* eslint-disable react/display-name */
-// import { v4 } from 'uuid';
 
 import { forwardRef } from 'react';
 import { useSession } from '../hooks/session-context';
