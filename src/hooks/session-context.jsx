@@ -1,5 +1,6 @@
-import { createContext, useContext, useState } from 'react';
-import SampleSession from '../../public/data/sample.json';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { useFetch } from './fetch-hook';
+// import SampleSession from '../../public/data/sample.json';
 
 // const SampleSession = {
 //   loginUser: { id: 1, name: '홍길동' },
@@ -10,10 +11,18 @@ import SampleSession from '../../public/data/sample.json';
 //   ],
 // };
 
+const SAMPLE_URL = '/data/sample.json';
+
 const SessionContext = createContext();
 
 const SessionProvider = ({ children }) => {
-  const [session, setSession] = useState(SampleSession);
+  const [session, setSession] = useState({});
+
+  const data = useFetch(SAMPLE_URL);
+  useEffect(() => {
+    console.log('dddddddddd>>', data);
+    if (data) setSession(data);
+  }, [data]);
 
   const login = ({ id, name }) => {
     setSession({ ...session, loginUser: { id, name } });
@@ -57,6 +66,10 @@ const SessionProvider = ({ children }) => {
       cart: session.cart.filter((item) => item.id !== itemId),
     });
   };
+
+  // useEffect(() => {
+  //   fetch(SAMPLE_URL).
+  // }, []);
 
   return (
     <SessionContext.Provider

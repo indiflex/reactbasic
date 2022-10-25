@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useCount } from '../hooks/count-context';
+import { useTimer } from '../hooks/timer-hook';
 
 export const Hello = (props) => {
   console.log('@@@@@ Hello');
   const { plusCount } = useCount();
   const [isActive, setActive] = useState(false);
+  const { useTimeout } = useTimer();
+
+  useTimeout(() => console.log('3초!!!'), 3000);
 
   // const [, rerender] = useState();
   // let primitive = 123;

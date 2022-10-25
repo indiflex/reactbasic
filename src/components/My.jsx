@@ -5,7 +5,7 @@ import { useSession } from '../hooks/session-context';
 
 export const My = () => {
   const { session, logout, addCartItem, removeCartItem } = useSession();
-  console.log('@@@@ My.session>>>', session);
+  // console.log('@@@@ My.session>>>', session);
   const itemNameRef = useRef();
   const itemPriceRef = useRef();
 
@@ -37,7 +37,7 @@ export const My = () => {
     <>
       {session.loginUser ? <Profile ref={logoutBtnRef} /> : <Login />}
       <ul style={styles.left}>
-        {session?.cart.map((item) => (
+        {session.cart?.map((item) => (
           <li key={item.id}>
             {item.name}
             <button onClick={() => removeCartItem(item.id)}>DEL</button>

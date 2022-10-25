@@ -25,7 +25,7 @@ function App() {
           {/* <span id='cnt' ref={countRef}> */}
           <span id='cnt'>{count}</span>
         </h2>
-        <Hello props={{ name: 'Hong', isMale: true }} />
+        {/* <Hello props={{ name: 'Hong', isMale: true }} /> */}
         {/* <Hello age={0} /> */}
         {/* <Hello name='홍길동' age={30}><h3>반갑습니다~</h3></Hello> */}
       </header>

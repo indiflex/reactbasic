@@ -4,12 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { CountProvider } from './hooks/count-context';
+import { Sample } from './components/Sample';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <StrictMode>
     <CountProvider>
-      <App />
+      {/* <App /> */}
+      <Sample />
     </CountProvider>
   </StrictMode>
 );
