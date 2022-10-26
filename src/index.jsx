@@ -6,13 +6,12 @@ import reportWebVitals from './reportWebVitals';
 import { CountProvider } from './hooks/count-context';
 import { Sample } from './components/Sample';
 
+const showApp = true;
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <StrictMode>
-    <CountProvider>
-      {/* <App /> */}
-      <Sample />
-    </CountProvider>
+    <CountProvider>{showApp ? <App /> : <Sample />}</CountProvider>
   </StrictMode>
 );
 

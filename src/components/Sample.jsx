@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useFetch } from '../hooks/fetch-hook';
+// import { useFetch } from '../hooks/fetch-hook';
 
 // const SAMPLE_URL = '/data/sample.json';
 
@@ -60,6 +60,7 @@ export const Sample = () => {
       <button onClick={getData2}>Get Data2</button> */}
       <div>
         {totalPrice}
+        <input type='text' onChange={rerender} />
         <button onClick={() => setArray([...array, 1])}>PushArray</button>
       </div>
     </>
