@@ -1,12 +1,20 @@
 // import { useEffect, useRef } from 'react';
 import { useEffect, useLayoutEffect, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import styled from 'styled-components';
 import './App.css';
 import { Hello } from './components/Hello';
+import { Home } from './components/Home';
+import { Item } from './components/Item';
+import { ItemLayout } from './components/ItemLayout';
+import { Items } from './components/Items';
+import Login from './components/Login';
 import { My } from './components/My';
-import { Parent } from './components/Parent';
 import { useCount } from './hooks/count-context';
 import { useSample } from './hooks/sample-hook';
 import { SessionProvider } from './hooks/session-context';
+import { Nav } from './Nav';
+import { NotFound } from './NotFound';
 
 function App() {
   // const { count, countRef } = useCount();
@@ -39,36 +47,22 @@ function App() {
 
   return (
     <div className='App'>
-      <header className='App-header'>
-        {/* <small>{JSON.stringify(position)}</small>
-        <small
-          style={{
-            backgroundColor: position.x !== position2.x ? 'red' : 'yellow',
-          }}
-        >
-          {JSON.stringify(position2)}
-        </small> */}
-
-        <SessionProvider>
-          <My />
-          <Parent />
-        </SessionProvider>
-
-        <h3>{sample}</h3>
-
-        <h2>
-          Count:
-          {/* <span id='cnt' ref={countRef}> */}
-          <span id='cnt'>{count}</span>
-          <button onClick={plusCount}>Count++</button>
-          <button onClick={minusCount}>Count--</button>
-        </h2>
-        {/* <Hello props={{ name: 'Hong', isMale: true }} /> */}
-        {/* <Hello age={0} /> */}
-        {/* <Hello name='홍길동' age={30}>
-          <h3>반갑습니다~</h3>
-        </Hello> */}
-      </header>
+      <SessionProvider>
+        <header className='App-header'>
+          <Nav />
+        </header>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/my' element={<My />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/items' element={<ItemLayout />}>
+            <Route index element={<Items />} />
+            <Route path=':id' element={<Item />} />
+          </Route>
+          <Route path='/hello' element={<Hello />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      </SessionProvider>
     </div>
   );
 }

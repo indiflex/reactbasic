@@ -1,7 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { Child } from './Child';
 
-export const Parent = () => {
+const Button = styled.button`
+  background-color: blue;
+`;
+
+export const Parent = ({ className }) => {
   console.log('@@@ Parent');
   const [state, setState] = useState(0);
   const [rrr, render] = useState();
@@ -10,14 +15,14 @@ export const Parent = () => {
   useEffect(() => console.log('*****'), [fn]); // 여기도 한번!
 
   return (
-    <>
+    <div className={className}>
       <Child fn={fn} />
       <hr />
-      <div>
-        Parent: {rrr} - {state}
+      <div className='ddd'>
+        *Parent: {rrr} - {state}
         <input type='text' onChange={(e) => render(e.target.value)} />
-        <button onClick={() => setState((pre) => pre + 1)}>State</button>
+        <Button onClick={() => setState((pre) => pre + 1)}>State</Button>
       </div>
-    </>
+    </div>
   );
 };

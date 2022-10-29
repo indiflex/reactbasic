@@ -1,0 +1,11 @@
+.no-list {
+  list-style: none;
+}
+
+nav a {
+  color: white;
+}
+
+.active {
+  color: red;
+}

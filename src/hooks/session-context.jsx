@@ -31,32 +31,40 @@ const TYPES = {
 };
 
 const reducer = (session, action) => {
+  let newSession;
   switch (action.type) {
     case TYPES.SET:
-      setStorage(action.payload);
-      return action.payload;
+      newSession = action.payload;
+      break;
 
     case TYPES.LOGIN:
-      return { ...session, loginUser: action.payload };
+      newSession = { ...session, loginUser: action.payload };
+      break;
 
     case TYPES.LOGOUT:
-      return { ...session, loginUser: null };
+      newSession = { ...session, loginUser: null };
+      break;
 
     case TYPES.ADD_ITEM:
       console.log('@@@@@@ addCartItem-reducer');
       // if (!session.cart.find((item) => item.id === action.payload.id))
       //   session.cart.push(action.payload);
-      return { ...session };
+      newSession = { ...session };
+      break;
 
     case TYPES.REMOVE_ITEM:
-      return {
+      newSession = {
         ...session,
         cart: session.cart.filter((item) => item.id !== action.payload.id),
       };
+      break;
 
     default:
       throw new Error(`${action.type} is not exists!`);
   }
+
+  setStorage(newSession);
+  return newSession;
 };
 
 const SessionContext = createContext();
