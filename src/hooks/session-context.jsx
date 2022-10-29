@@ -1,71 +1,124 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useReducer,
+} from 'react';
 import { useFetch } from './fetch-hook';
 // import SampleSession from '../../public/data/sample.json';
 
-// const SampleSession = {
-//   loginUser: { id: 1, name: '홍길동' },
-//   cart: [
-//     { id: 100, name: '라면', price: 3000 },
-//     { id: 101, name: '컵라면', price: 2000 },
-//     { id: 200, name: '파', price: 5000 },
-//   ],
-// };
-
 const SAMPLE_URL = '/data/sample.json';
+
+const STORAGE = {
+  SESSION: 'my-session',
+};
+
+const getStorage = (key = STORAGE.SESSION) =>
+  JSON.parse(localStorage.getItem(key));
+const setStorage = (value, key = STORAGE.SESSION) =>
+  localStorage.setItem(
+    key,
+    typeof value === 'object' ? JSON.stringify(value) : value
+  );
+
+const TYPES = {
+  SET: Symbol('setSession'),
+  LOGIN: Symbol('login'),
+  LOGOUT: Symbol('logout'),
+  ADD_ITEM: Symbol('addItem'),
+  REMOVE_ITEM: Symbol('removeItem'),
+};
+
+const reducer = (session, action) => {
+  switch (action.type) {
+    case TYPES.SET:
+      setStorage(action.payload);
+      return action.payload;
+
+    case TYPES.LOGIN:
+      return { ...session, loginUser: action.payload };
+
+    case TYPES.LOGOUT:
+      return { ...session, loginUser: null };
+
+    case TYPES.ADD_ITEM:
+      console.log('@@@@@@ addCartItem-reducer');
+      // if (!session.cart.find((item) => item.id === action.payload.id))
+      //   session.cart.push(action.payload);
+      return { ...session };
+
+    case TYPES.REMOVE_ITEM:
+      return {
+        ...session,
+        cart: session.cart.filter((item) => item.id !== action.payload.id),
+      };
+
+    default:
+      throw new Error(`${action.type} is not exists!`);
+  }
+};
 
 const SessionContext = createContext();
 
 const SessionProvider = ({ children }) => {
-  const [session, setSession] = useState({});
-
-  const data = useFetch(SAMPLE_URL);
+  // const [session, setSession] = useState({});
+  const [session, dispatch] = useReducer(reducer, {});
+  const data = useFetch(SAMPLE_URL, getStorage());
+  console.log('SESSIN>>>>>>>>>>', session, data);
   useEffect(() => {
     console.log('dddddddddd>>', data);
-    if (data) setSession(data);
+    // if (data) setSession(data);
+    dispatch({ type: TYPES.SET, payload: data });
   }, [data]);
 
-  const login = ({ id, name }) => {
-    setSession({ ...session, loginUser: { id, name } });
-  };
+  const login = useCallback((userInfo) => {
+    // setSession({ ...session, loginUser: { id, name } });
+    dispatch({ type: TYPES.LOGIN, payload: userInfo });
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     console.log('App.logout!!');
     // session.loginUser = null; // bad! re-render
-    setSession({ ...session, loginUser: null });
-    console.log('App.session>>>', session);
-  };
+    // setSession({ ...session, loginUser: null });
+    dispatch({ type: TYPES.LOGOUT });
+  }, [session]);
 
-  const addCartItem = (name, price) => {
-    const maxId = Math.max(...session.cart.map((item) => item.id), 0); // mapBy('id')
-    session.cart.push({ id: maxId + 1, name, price });
-    setSession({ ...session });
-    // bad!!
+  const addCartItem = useCallback(
+    (name, price) => {
+      console.log('@@@@@@ addCartItem');
+      const maxId = Math.max(...session.cart.map((item) => item.id), 0);
+      // session.cart.push({ id: maxId + 1, name, price });
+      // setSession({ ...session });
+      // fetch(url, { method: 'POST', body: {} })
+      //   .then((res) => res.json())
+      //   .then((data) => {
+      //     session.cart.push({ id: maxId + 1, name, price });
+      //     dispatch({
+      //       type: TYPES.ADD_ITEM,
+      //       payload: data,
+      //     });
+      //   });
+      session.cart.push({ id: maxId + 1, name, price });
+      dispatch({ type: TYPES.ADD_ITEM });
+    },
+    [session]
+  );
+  // const addCartItem = (name, price) => {
+  //   console.log('@@@@@@ addCartItem');
+  //   const maxId = Math.max(...session.cart.map((item) => item.id), 0);
+  //   // session.cart.push({ id: maxId + 1, name, price });
+  //   // setSession({ ...session });
+  //   dispatch({ type: TYPES.ADD_ITEM, payload: { id: maxId + 1, name, price } });
+  // };
+
+  const removeCartItem = useCallback((id) => {
     // setSession({
     //   ...session,
-    //   cart: [...session.cart, { id: 300, name, price }],
+    //   cart: session.cart.filter((item) => item.id !== id),
     // });
-  };
-
-  const removeCartItem = (itemId) => {
-    /* (bad!) sess라는 사본을 만들었는데 cart도 또 만들다니...
-    const sess = { ...session };
-    sess.cart = { ...sess.cart.filter((item) => item.id !== itemId) };
-    setSession(sess);
-    */
-
-    /* (bad!) 윗 줄에서 session 사본을 만들었는데 cart도 사본을 만들고 있다!
-    setSession({
-      ...session,
-      cart: [...session.cart.filter((item) => item.id !== itemId)], 
-    });
-    */
-
-    // good
-    setSession({
-      ...session,
-      cart: session.cart.filter((item) => item.id !== itemId),
-    });
-  };
+    dispatch({ type: TYPES.REMOVE_ITEM, payload: { id } });
+  }, []);
 
   // useEffect(() => {
   //   fetch(SAMPLE_URL).

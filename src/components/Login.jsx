@@ -1,15 +1,15 @@
-import { useEffect, useRef } from 'react';
-import { useCount } from '../hooks/count-context';
-import { useSession } from '../hooks/session-context';
+import { useEffect, useRef, memo } from 'react';
+// import { useCount } from '../hooks/count-context';
+// import { useSession } from '../hooks/session-context';
 
-const Login = () => {
+const Login = ({ login }) => {
   console.log('@@@ Login');
   // const [userId, setUserId] = useState();
   const userIdRef = useRef();
   const userNameRef = useRef();
-  const { plusCount, minusCount } = useCount();
+  // const { plusCount, minusCount } = useCount();
 
-  const { login } = useSession();
+  // const { login } = useSession();
 
   // fetch('/data/sample.json')
   //   .then((res) => res.json())
@@ -30,7 +30,7 @@ const Login = () => {
       return userNameRef.current.focus();
     }
 
-    console.log('xxxx222', userNameRef.current?.value);
+    // console.log('xxxx222', userNameRef.current?.value);
     login({ id, name });
   };
 
@@ -38,11 +38,11 @@ const Login = () => {
     console.log('effect!!!!!!');
     console.log('로인해주세요!');
     userIdRef.current.focus();
-    plusCount();
+    // plusCount();
 
     return () => {
       console.log('로인되었습니다!');
-      minusCount();
+      // minusCount();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -60,7 +60,7 @@ const Login = () => {
               setUserId(parseInt(e.target.value));
             }}
           /> */}
-          <input type='number' ref={userIdRef} />;
+          <input type='number' ref={userIdRef} />
         </div>
         <div>
           User Name: <input type='text' ref={userNameRef} />
@@ -71,4 +71,5 @@ const Login = () => {
   );
 };
 
-export default Login;
+// export default Login;
+export default memo(Login);

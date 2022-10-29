@@ -1,11 +1,23 @@
-import { useEffect, useRef } from 'react';
+import {
+  memo,
+  useCallback,
+  // useCallback,
+  useEffect,
+  // useLayoutEffect,
+  useRef,
+  // useState,
+} from 'react';
 import Profile from './Profile';
 import Login from './Login';
 import { useSession } from '../hooks/session-context';
+// import { flushSync } from 'react-dom';
+
+// const MemoedLogin = memo(Login);
 
 export const My = () => {
-  const { session, logout, addCartItem, removeCartItem } = useSession();
-  // console.log('@@@@ My.session>>>', session);
+  const { session, login, logout, addCartItem, removeCartItem } = useSession();
+  console.log('@@@@ My.session>>>', session);
+  // console.log('***************************************');
   const itemNameRef = useRef();
   const itemPriceRef = useRef();
 
@@ -26,6 +38,7 @@ export const My = () => {
       return $price.focus();
     }
 
+    console.log('ssssssssssss>>', session, session.cart);
     addCartItem($name.value, Number($price.value));
   };
 
@@ -33,13 +46,36 @@ export const My = () => {
     left: { textAlign: 'left' },
   };
 
+  // const [ulHeight, setUlHeight] = useState(0);
+  // const cntRef = useRef(0);
+  // const f100 = () => {
+  //   console.log('aaaaaaaaaa>>', cntRef.current);
+  //   for (let i = 0; i < 100; i++) {
+  //     cntRef.current += 1;
+  //     // flushSync(() => setUlHeight((pre) => pre + 1));
+  //   }
+  //   // setTimeout(() => {
+  //   // console.log('aa>>', cntRef.current);
+  //   setUlHeight(cntRef.current);
+  //   // }, 500);
+  // };
+
   return (
     <>
-      {session.loginUser ? <Profile ref={logoutBtnRef} /> : <Login />}
+      {session?.loginUser ? (
+        <Profile ref={logoutBtnRef} />
+      ) : (
+        <Login login={login} />
+      )}
+      {/* <h3>
+        ul.height: {ulHeight} - {cntRef.current}
+      </h3> */}
+      {session?.cart?.length}
       <ul style={styles.left}>
-        {session.cart?.map((item) => (
+        {session?.cart?.map((item) => (
           <li key={item.id}>
             {item.name}
+            {/* <button onClick={() => removeCartItem(item.id)}>DEL</button> */}
             <button onClick={() => removeCartItem(item.id)}>DEL</button>
           </li>
         ))}
@@ -51,6 +87,7 @@ export const My = () => {
             id='item-name'
             type='text'
             ref={itemNameRef}
+            defaultValue='신규아이템'
             placeholder='아이템 이름...'
             required
           />

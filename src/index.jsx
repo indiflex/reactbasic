@@ -5,6 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { CountProvider } from './hooks/count-context';
 import { Sample } from './components/Sample';
+// import { Color } from './components/Color';
+// import { Parent } from './components/Parent';
 
 const showApp = true;
 
@@ -12,6 +14,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <StrictMode>
     <CountProvider>{showApp ? <App /> : <Sample />}</CountProvider>
+    {/* <Parent /> */}
+    {/* <Color /> */}
   </StrictMode>
 );
 
