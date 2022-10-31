@@ -8,7 +8,7 @@ import {
 import { useFetch } from './fetch-hook';
 // import SampleSession from '../../public/data/sample.json';
 
-const SAMPLE_URL = '/data/sample.json';
+const SAMPLE_URL = 'data/sample.json';
 
 const STORAGE = {
   SESSION: 'my-session',
