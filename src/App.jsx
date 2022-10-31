@@ -52,14 +52,14 @@ function App() {
           <Nav />
         </header>
         <Routes>
-          <Route path='/reactbasic/' element={<Home />} />
-          <Route path='/reactbasic/my' element={<My />} />
-          <Route path='/reactbasic/login' element={<Login />} />
-          <Route path='/reactbasic/items' element={<ItemLayout />}>
+          <Route path='/' element={<Home />} />
+          <Route path='/my' element={<My />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/items' element={<ItemLayout />}>
             <Route index element={<Items />} />
             <Route path=':id' element={<Item />} />
           </Route>
-          <Route path='/reactbasic/hello' element={<Hello />} />
+          <Route path='/hello' element={<Hello />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
       </SessionProvider>

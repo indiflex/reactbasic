@@ -10,30 +10,30 @@ export const Nav = () => (
     <nav>
       <ul className='no-list'>
         <li>
-          <NavLink to='/reactbasic/' replace>
+          <NavLink to='/' replace>
             Home
           </NavLink>
         </li>
         <li>
-          <NavLink to='/reactbasic/login' className={activeFn}>
+          <NavLink to='/login' className={activeFn}>
             Login
           </NavLink>
         </li>
         <li>
           <NavLink
-            to='/reactbasic/my'
+            to='/my'
             style={({ isActive }) => (isActive ? { color: 'blue' } : {})}
           >
             {({ isActive }) => (isActive ? 'My' : 'Your')}
           </NavLink>
         </li>
         <li>
-          <NavLink to='/reactbasic/items' className={activeFn}>
+          <NavLink to='/items' className={activeFn}>
             Items
           </NavLink>
         </li>
         <li>
-          <NavLink to='/reactbasic/hello' className={activeFn}>
+          <NavLink to='/hello' className={activeFn}>
             About
           </NavLink>
         </li>
