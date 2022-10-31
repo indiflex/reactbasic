@@ -1,5 +1,5 @@
 export const Home = () => (
   <>
-    <h1>ReactBasic Home</h1>
+    <h1>ReactBasic v2</h1>
   </>
 );
