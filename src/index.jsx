@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { CountProvider } from './hooks/count-context';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 // import { Sample } from './components/Sample';
 // import { Color } from './components/Color';
 // import { Parent } from './components/Parent';
@@ -15,9 +15,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <StrictMode>
     <CountProvider>
-      <BrowserRouter>
+      <HashRouter>
         <App />
-      </BrowserRouter>
+      </HashRouter>
     </CountProvider>
     {/* <Parent /> */}
     {/* <Color /> */}
