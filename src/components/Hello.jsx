@@ -55,6 +55,7 @@ export const Hello = (props) => {
         <button onClick={() => plusCount()}>Count++</button>
         <button id='btn'>xxx</button>
       </div>
+      <img src='logo192.png' alt='logo' />
     </>
   );
 };

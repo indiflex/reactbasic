@@ -1,7 +1,6 @@
 // import { useEffect, useRef } from 'react';
-import { useEffect, useLayoutEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import './App.css';
 import { Hello } from './components/Hello';
 import { Home } from './components/Home';
@@ -10,16 +9,16 @@ import { ItemLayout } from './components/ItemLayout';
 import { Items } from './components/Items';
 import Login from './components/Login';
 import { My } from './components/My';
-import { useCount } from './hooks/count-context';
-import { useSample } from './hooks/sample-hook';
+// import { useCount } from './hooks/count-context';
+// import { useSample } from './hooks/sample-hook';
 import { SessionProvider } from './hooks/session-context';
 import { Nav } from './Nav';
 import { NotFound } from './NotFound';
 
 function App() {
   // const { count, countRef } = useCount();
-  const { count, plusCount, minusCount } = useCount();
-  const sample = useSample();
+  // const { count, plusCount, minusCount } = useCount();
+  // const sample = useSample();
 
   // const [position, setPosition] = useState({ x: 0, y: 0 });
   // const [position2, setPosition2] = useState({ x: 0, y: 0 });

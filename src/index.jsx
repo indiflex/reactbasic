@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { CountProvider } from './hooks/count-context';
 import { HashRouter } from 'react-router-dom';
+// import { BrowserRouter } from 'react-router-dom';
 // import { Sample } from './components/Sample';
 // import { Color } from './components/Color';
 // import { Parent } from './components/Parent';

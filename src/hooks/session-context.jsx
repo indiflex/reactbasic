@@ -93,21 +93,16 @@ const SessionProvider = ({ children }) => {
   }, [session]);
 
   const addCartItem = useCallback(
-    (name, price) => {
+    (name, price, id) => {
       console.log('@@@@@@ addCartItem');
-      const maxId = Math.max(...session.cart.map((item) => item.id), 0);
-      // session.cart.push({ id: maxId + 1, name, price });
-      // setSession({ ...session });
-      // fetch(url, { method: 'POST', body: {} })
-      //   .then((res) => res.json())
-      //   .then((data) => {
-      //     session.cart.push({ id: maxId + 1, name, price });
-      //     dispatch({
-      //       type: TYPES.ADD_ITEM,
-      //       payload: data,
-      //     });
-      //   });
-      session.cart.push({ id: maxId + 1, name, price });
+      if (id) {
+        const item = session.cart.find((item) => item.id === id);
+        item.name = name;
+        item.price = price;
+      } else {
+        const maxId = Math.max(...session.cart.map((item) => item.id), 0);
+        session.cart.push({ id: maxId + 1, name, price });
+      }
       dispatch({ type: TYPES.ADD_ITEM });
     },
     [session]
